@@ -1,0 +1,70 @@
+NAME
+    WebService::KakakuCom - Handle WebAPI of KakakuCom
+
+SYNOPSIS
+        use WebService::KakakuCom;
+
+        my $api = WebService::KakakuCom->new;
+
+        my @results = $api->search('VAIO');
+        print $_->ProductName, "\n" for @results;
+
+        $api->debug(1);
+        $api->ie('utf8'); # for icode of Jcode
+        my $rs = $api->search(
+            'VAIO',
+            { CategoryGroup => 'Pc', SortOrder => 'daterank', PageNum => 2 }
+        );
+        for (@$rs) {
+            print $_->ProductID;
+            print $_->ProductName;
+            print $_->CategoryName;
+            print $_->MakerName;
+            print $_->ImageUrl;
+            print $_->ItemPageUrl;
+            print $_->BbsPageUrl;
+            print $_->ReviewPageUrl;
+            print $_->LowestPrice;
+            print $_->NumOfBbs;
+            print $_->ReviewRating;
+        }
+
+        my $pager = $rs->pager; # Data::Page
+        print $pager->total_entries;
+        print $pager->entries_on_this_page;
+        ...
+
+        my $product = $api->product($ProductID);
+        print $product->ProductID, "\n";
+        ...
+
+DESCRIPTION
+    Kakaku.com WebAPI from http://apiblog.kakaku.com/ (in Japanese)
+
+FUNCTIONS
+  ua
+    Returns an User-Agent instance.
+
+  search
+    Returns search resulset.
+
+  product
+    Returns an object of product.
+
+WARNING
+    This module is in beta version. Object interface it provides may be
+    changed later.
+
+AUTHOR
+    Naoya Ito, "<naoya at bloghackers.net>"
+
+SEE ALSO
+    * http://apiblog.kakaku.com/KakakuItemSearchV1.0.html
+    * http://apiblog.kakaku.com/KakakuItemInfoV1.0.html
+
+COPYRIGHT & LICENSE
+    Copyright 2006 Naoya Ito, all rights reserved.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
