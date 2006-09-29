@@ -14,7 +14,7 @@ use Data::Page;
 Readonly my $ApiRoot => 'http://api.kakaku.com/Ver1/';
 Readonly my $EntriesPerPage => 5;
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 __PACKAGE__->mk_accessors(qw/ie/);
 __PACKAGE__->mk_classdata($_) for qw/debug/;
@@ -46,7 +46,7 @@ sub search {
     );
 
     my $res = $self->ua->get($uri);
-    corak $res->status_line if $res->is_error;
+    croak $res->status_line if $res->is_error;
 
     my $rs = WebService::KakakuCom::Parser->parse_for_search($res->content);
     $rs->pager(Data::Page->new($rs->NumOfResult, $EntriesPerPage, $args->{PageNum} || 1));
