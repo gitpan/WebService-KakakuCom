@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 20;
+use Test::More tests => 21;
 use WebService::KakakuCom;
 
 my $api = WebService::KakakuCom->new;
@@ -10,6 +10,7 @@ ok $api;
 
 ok $api->ua;
 isa_ok $api->ua, 'LWP::UserAgent';
+is $api->ua->agent, sprintf "%s/%s", 'WebService::KakakuCom', WebService::KakakuCom->VERSION;
 
 my $rs = $api->search('Vaio');
 ok $rs;

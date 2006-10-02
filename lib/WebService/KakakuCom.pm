@@ -14,7 +14,7 @@ use Data::Page;
 Readonly my $ApiRoot => 'http://api.kakaku.com/Ver1/';
 Readonly my $EntriesPerPage => 5;
 
-our $VERSION = 0.04;
+our $VERSION = 0.05;
 
 __PACKAGE__->mk_accessors(qw/ie/);
 __PACKAGE__->mk_classdata($_) for qw/debug/;
@@ -26,7 +26,7 @@ sub ua {
     } else {
         $self->{ua} and return $self->{ua};
         $self->{ua} = LWP::UserAgent->new;
-        $self->{ua}->agent(sprintf '/', __PACKAGE__, $self->VERSION);
+        $self->{ua}->agent(join '/', __PACKAGE__, $self->VERSION);
     }
     $self->{ua};
 }
